@@ -1,0 +1,16 @@
+<div class='well'>
+  <h2>Projects</h2>
+  <% session[:projects].each do |name, time| %>
+    <%= name %>
+    <%= time %>
+  <% end %>
+</div>
+  </br>
+<div>
+  <form action='/project_entry' method='get'>
+    <button type='submit' class='btn btn-info'>Add project</button>
+  </form>
+  <form action='/results' method='get'>
+    <button type='submit' class='btn btn-info'>See results</button>
+  </form>
+</div>

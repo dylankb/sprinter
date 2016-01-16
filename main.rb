@@ -44,9 +44,7 @@ post '/projects' do
     session[:projects] = projects 
   end
 
-  #if somthing
-    #redirect '/project_entry'
-  #else
+
   redirect '/project_list'
 end
 
@@ -60,5 +58,5 @@ post '/calculate_sprint' do
 end
 
 get '/results' do
-
+  erb :results
 end

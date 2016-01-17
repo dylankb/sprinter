@@ -1,7 +1,8 @@
-<body>
-  <div class='well'>
-    <h2>Projects</h2>
-
-    <p>This is where the result for days will be...</p>
-  </div>
-</body>
+<div class='well'>
+  <h2>Projects</h2>
+  <% session[:projects].each do |name, time| %>
+    <p>Name: <%= name %></p>
+    <p>Time: <%= time %></p>
+    <p>Days to complete: <%= session[:days_to_complete_projects] %></p>
+  <% end %>
+</div>

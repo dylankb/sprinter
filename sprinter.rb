@@ -23,22 +23,26 @@ p daily_projects_times
 
 days_to_complete_projects = 0
 
-projects_hsh = projects.clone
-
-
 num_of_projects.times do
   
   current_daily_project_time = daily_projects_times[-1]
-  smallest_project = projects_hsh.select { |name, time| time == projects_hsh.values.min }
+  smallest_project = projects.select { |name, time| time == projects.values.min }
   days_to_complete_smallest_project = smallest_project.values.join.to_i / current_daily_project_time
   days_to_complete_projects += days_to_complete_smallest_project
 
-  projects_hsh.delete(smallest_project.keys.join)
+  projects.delete(smallest_project.keys.join)
   daily_projects_times.pop
 
-  projects_hsh.each do |name, time|
-    projects_hsh[name] = time - current_daily_project_time * days_to_complete_smallest_project
+  projects.each do |name, time|
+    projects[name] = time - current_daily_project_time * days_to_complete_smallest_project
   end
 end
 
 p days_to_complete_projects
+
+#Notes 
+
+# <!-- <% #if @show_results_button %> -->
+# <!-- <% #end %> -->
+# <!-- <% #if @show_availability_button %> -->
+# <!-- <% #end %> -->

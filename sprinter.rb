@@ -1,48 +1,49 @@
 #require 'Date'
 require 'pry'
 
-project1 = 'ruby'
-project1_time = 300
-projects = { project1 => project1_time }
+projects = {
+  'ruby' => {'time' => 300, 'days' => 0}, 
+  'birdhouse' => {'time' => 180, 'days' => 0},
+  'landing page' => {'time' => 180, 'days' => 0}
+}
 
-project2 = 'birdhouse'
-project2_time = 180
-projects[project2] = project2_time
 p projects
 
 time_avail = 840
-sprint_length = 14
+SPRINT_DAYS = 14
 
-daily_projects_times = []
-num_of_projects = projects.size
-
-num_of_projects.times do |n|
-  daily_projects_times << ((time_avail / sprint_length) / (n + 1))
+project_times = []
+projects.each do |_, info|
+  project_times << info['time']
 end
-p daily_projects_times
 
+uniq_project_times = project_times.uniq.size
 days_to_complete_projects = 0
 
-num_of_projects.times do
-  
-  current_daily_project_time = daily_projects_times[-1]
-  smallest_project = projects.select { |name, time| time == projects.values.min }
-  days_to_complete_smallest_project = smallest_project.values.join.to_i / current_daily_project_time
+updated_projects = {}
+
+uniq_project_times.times do
+  num_of_projects = projects.size
+
+  current_daily_project_time = (time_avail / SPRINT_DAYS) / num_of_projects
+  smallest_project = projects.group_by { |_, info| info['time'] }.min.last.to_h
+  days_to_complete_smallest_project = smallest_project.first[1]['time'] / current_daily_project_time
   days_to_complete_projects += days_to_complete_smallest_project
 
-  projects.delete(smallest_project.keys.join)
-  daily_projects_times.pop
+  
+  projects.each do |name, info|
+    info['days'] += days_to_complete_smallest_project
+  end
+  updated_projects.merge!(projects)
 
-  projects.each do |name, time|
-    projects[name] = time - current_daily_project_time * days_to_complete_smallest_project
+  smallest_project.size.times do |i|
+    projects.delete(smallest_project.keys[i])
+  end
+
+  projects.each do |name, info|
+    info['time'] = info['time'] - current_daily_project_time * days_to_complete_smallest_project
   end
 end
 
 p days_to_complete_projects
-
-#Notes 
-
-# <!-- <% #if @show_results_button %> -->
-# <!-- <% #end %> -->
-# <!-- <% #if @show_availability_button %> -->
-# <!-- <% #end %> -->
+p updated_projects

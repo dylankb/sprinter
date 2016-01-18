@@ -1,20 +1,32 @@
+
 <div class='well'>
   <h2>Projects</h2>
-  <% session[:projects].each do |name, time| %>
-    <p>Name: <%= name %></p>
-    <p>Time: <%= time %></p>
+    <ol>
+  <% session[:projects].each do |name, info| %>
+      <li>
+        <p><strong>Name:</strong> <%= name %></p>
+      </li>
+        <p>Time: <%= info['time'] %> minutes</p>
+        <p>Days needed: <%= info['days'] %></p>
+      </br>
   <% end %>
+    </ol>
   <p>Time available: <%= session[:time_available] %></p>
+  <p>Total days to complete projects: <%= session[:days_to_complete_projects] %></p>
 </div>
   </br>
 <div>
   <form action='/project_entry' method='get'>
     <button type='submit' class='btn btn-info'>Add project</button>
   </form>
-  <form action='/calculate_sprint' method='post'>
-    <button type='submit' class='btn btn-info'>See results</button>
-  </form>
-  <form action='/availability' method='get'>
-    <button type='submit' class='btn btn-info'>Done</button>
-  </form>
+  <% if session[:show_results_button] == true %>
+    <form action='/calculate_sprint' method='post'>
+      <button type='submit' class='btn btn-info'>See results</button>
+    </form>
+  <% end %>
+  <% if session[:show_availability_button] == true %>
+    <form action='/availability' method='get'>
+      <button type='submit' class='btn btn-info'>Done</button>
+    </form>
+  <% end %>
 </div>

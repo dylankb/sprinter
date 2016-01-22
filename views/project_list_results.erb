@@ -2,7 +2,7 @@
 <div class='well'>
   <h2>Projects</h2>
     <ol>
-  <% session[:projects].each do |name, info| %>
+  <% session[:projects_updated].each do |name, info| %>
       <li>
         <p><strong>Name:</strong> <%= name  %></p>
       </li>
@@ -15,6 +15,7 @@
   <% end %>
     </ol>
   <p>Time available per day (hours): <%= "#{session[:hours_available]}"  %></p>
+  <p>Total days to complete projects: <%= session[:days_to_complete_projects] %></p>
 </div>
   </br>
 <div>

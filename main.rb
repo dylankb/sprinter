@@ -1,3 +1,5 @@
+require 'pry'
+
 require 'rubygems'
 require 'sinatra'
 require 'pry'
@@ -53,13 +55,18 @@ post '/add_project' do
       'time'=>params[:project_minutes].to_f, 
       'days'=> 0 } 
     }
-  
-  #binding.pry
+
+  project[params[:project_name]]['time'] = project[params[:project_name]]['time'] * 60
+  binding.pry
+
+
   if session[:projects]
     session[:projects].merge!(project)
   else
     session[:projects] = project 
   end
+
+
 
   session[:show_availability_button] = true
   redirect '/project_list'

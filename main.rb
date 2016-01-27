@@ -1,9 +1,7 @@
-require 'pry'
-
 require 'rubygems'
 require 'sinatra'
-require 'pry'
 require 'date'
+require 'csv'
 
 use Rack::Session::Cookie, :key => 'rack.session',
                            :path => '/',
@@ -150,7 +148,6 @@ post '/calculate_sprint' do
     end
   end
 
-  binding.pry
   session[:days_to_complete_projects] = round_all_fractions_up(days_to_complete_projects)
   session[:projects_updated] = projects_updated
   session[:today] = Time.new.to_date
@@ -160,4 +157,47 @@ end
 
 get '/project_list_results' do
   erb :project_list_results
+end
+
+post '/export_tasks' do
+  projects_exporter = session[:projects_updated].dup
+
+  projects_exporter.each do |key, value|
+    projects_exporter[key] = projects_exporter[key].dup
+    projects_exporter[key]['today'] = session[:today]
+    projects_exporter[key]['time'] = "Time: #{value['time']} minutes"
+    projects_exporter[key]['days'] = (session[:today] + value['days']).to_s
+  end
+
+  convert = []
+  count = 0
+
+  projects_exporter.each do |key,value|
+    convert << [key]
+    int_count = 0
+    value.each do |k, v|
+      convert[count] << v
+      int_count += 1
+      if int_count == value.size
+        count += 1
+      end
+    end
+  end
+
+  session[:csv_export] = convert
+
+  redirect '/download'
+end
+
+get '/download' do
+
+  content_type 'application/csv'
+  attachment "#{session[:username]}'s tasks.csv"
+  result = CSV.generate do |csv|
+    csv << ['Subject','Description','End Date','Start Date']
+    session[:csv_export].each do |p|
+      csv << p
+    end
+  end
+
 end

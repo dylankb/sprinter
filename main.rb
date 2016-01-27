@@ -17,7 +17,7 @@ helpers do
   end
 
   def round_all_fractions_up(days)
-    days.to_f % 1 == 0 ? days : days.to_i + 1
+    days.to_f % 1 == 0 ? days.to_i : days.to_i + 1
   end
 
   def calculate_total_time(projects)

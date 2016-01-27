@@ -15,7 +15,7 @@
     <% end %>
     </ol>
     <p>Time available per day (hours): <%= "#{session[:hours_available]}"  %></p>
-    <p>Total days to complete projects: <%= session[:days_to_complete_projects] %></p>
+    <p>Total days to complete projects: <%= round_all_fractions_up(session[:days_to_complete_projects]) %></p>
   </div>
 
   <div class='row'>

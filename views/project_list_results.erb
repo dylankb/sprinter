@@ -1,7 +1,7 @@
 
 <div class='well'>
 
-  <h2><%= "#{session[:username]}'s"%> Projects</h2>
+  <h2 align='center'><%= "#{session[:username]}'s"%> Projects</h2>
   <div class='well'>
     <ol>
     <% session[:projects_updated].each do |name, info| %>

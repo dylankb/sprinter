@@ -1,35 +1,38 @@
 
 <div class='well'>
-  <h2>Projects</h2>
+
+  <h2><%= "#{session[:username]}'s"%> Projects</h2>
+  <div class='well'>
     <ol>
-  <% session[:projects_updated].each do |name, info| %>
+    <% session[:projects_updated].each do |name, info| %>
       <li>
         <p><strong>Name:</strong> <%= name  %></p>
       </li>
         <p>Hours: <%= "#{format_time_in_hours(info['time'])}" %></p>
-        <% if session[:today] %>
-          <p>Days needed: <%= info['days'] %></p>
-          <p>Finish date: <%= session[:today] + info['days']%></p>
-        <% end %>
+        <p>Days needed: <%= round_all_fractions_up(info['days']) %></p>
+        <p>Finish date: <%= session[:today] + round_all_fractions_up(info['days'])%></p>
       </br>
-  <% end %>
+    <% end %>
     </ol>
-  <p>Time available per day (hours): <%= "#{session[:hours_available]}"  %></p>
-  <p>Total days to complete projects: <%= session[:days_to_complete_projects] %></p>
-</div>
-  </br>
-<div>
-  <form action='/project_entry' method='get'>
-    <button type='submit' class='btn btn-info'>Add project</button>
-  </form>
-  <% if session[:show_results_button] == true %>
-    <form action='/calculate_sprint' method='post'>
-      <button type='submit' class='btn btn-info'>See results</button>
-    </form>
-  <% end %>
-  <% if session[:show_availability_button] == true %>
-    <form action='/availability' method='get'>
-      <button type='submit' class='btn btn-info'>Done</button>
-    </form>
-  <% end %>
+    <p>Time available per day (hours): <%= "#{session[:hours_available]}"  %></p>
+    <p>Total days to complete projects: <%= session[:days_to_complete_projects] %></p>
+  </div>
+
+  <div class='row'>
+     <div class='span3'>
+      <form action='/project_entry' method='get'>
+        <button type='submit' class='btn btn-info center'>Add Project</button>
+      </form>
+     </div>
+      <div class='span3'>
+        <form action='/availability' method='get'>
+          <button type='submit' class='btn btn-primary center'>Change Daily Time</button>
+        </form>
+      </div>
+      
+      <div class='span1 pull-right'>
+        <p><a href="/new_user">Start Over</a></p>
+      </div>
+  </div>
+
 </div>

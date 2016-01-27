@@ -1,11 +1,13 @@
-
-
-<form action='/add_project' method='post'>
-  <h2>What do you want to finish in the next two weeks?<h2>
-    <label for='name'>Task name:</label>
-    <input type='text' id='name' name='project_name'/>
-    <label for='time'>How many minutes will it take?:</label>
-    <input type='text' id='time' name='project_minutes'/>
-    </br>
-    <input type='submit' align='left' class='btn'/>
-</form>
+<div class='well'>
+  <h2>Add Tasks</h2>
+  <form action='/add_project' method='post'>
+    <h3>What do you want to finish in the next two weeks?</h3>
+      <label for='name'>Task name:</label>
+      <input type='text' id='name' name='project_name'/>
+      <label for='time'>How many hours will it take?:</label>
+      <input type='text' id='time' name='project_minutes'/>
+      </br>
+      <input type='submit' align='left' class='btn btn-primary'/>
+  </form>
+  <p align='right'><a href="/new_user">Start Over</a></p>
+</div>

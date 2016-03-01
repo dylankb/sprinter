@@ -27,7 +27,10 @@ helpers do
     end
     total_time
   end
+end
 
+configure do
+  set :erb, :escape_html => true
 end
 
 get '/' do
